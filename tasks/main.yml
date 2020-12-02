@@ -1,0 +1,17 @@
+---
+- hosts: prometheus_servers
+  vars:
+    prometheus_port: 9099
+  tasks:
+    - name: Prometheus server
+      include_role:
+        name: mesaguy.prometheus
+        tasks_from: '{{ prometheus_component }}'
+      loop_control:
+        loop_var: prometheus_component
+      with_items:
+        - prometheus
+        - alertmanager
+        - blackbox_exporter
+        - statsd_exporter
+        - node_exporter
